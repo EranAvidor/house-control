@@ -8,12 +8,14 @@ var Gpio = require('onoff').Gpio,
 
 /* GET home page. */
 router.get('/on', function(req, res, next) {
-  greenLed.writeSync(1);
-  res.render('okay');
+  greenLed.writeSync(1, function() {
+    res.send('okay');
+  });
 });
 router.get('/off', function(req, res, next) {
-  greenLed.writeSync(0);
-  res.render('okay');
+  greenLed.writeSync(0, function() {
+    res.send('okay');
+  });
 });
 
 module.exports = router;
