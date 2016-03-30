@@ -23,20 +23,21 @@ router.get('/toggle', function(req, res, next) {
   greenLed.writeSync(ledStatus);
   res.send('okay');
 });
+
 router.get('/blink', function(req, res, next) {
   (function blink(count) {
-  if (count <= 0) {
-    return true;
-  }
+    if (count <= 0) {
+      return true;
+    }
 
-  greenLed.read(function (err, value) { // Asynchronous read.
-	greenLed.write(value ^ 1);// Asynchronous write.
-  });
+    greenLed.read(function (err, value) { // Asynchronous read.
+      greenLed.write(value ^ 1);// Asynchronous write.
+    });
 
-  setTimeout(function () {
-	blink(count - 1);
-  }, 200);
-}(25));
+    setTimeout(function () {
+      blink(count - 1);
+    }, 200);
+  }(25));
   res.send('okay');
 });
 module.exports = router;
