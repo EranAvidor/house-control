@@ -8,7 +8,7 @@ var Gpio = require('onoff').Gpio,
 
 /* GET home page. */
 router.get('/meital', function(req, res, next) {
-	res.send('shalom');
+	res.send('sam');
 });
 
 router.get('/on', function(req, res, next) {
