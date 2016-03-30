@@ -37,6 +37,19 @@ router.get('/blink', function(req, res, next) {
     setTimeout(function () {
       blink(count - 1);
     }, 200);
+  }(50));
+  (function blink(count) {
+    if (count <= 0) {
+      return true;
+    }
+
+    blueLed.read(function (err, value) { // Asynchronous read.
+      blueLed.write(value ^ 1);// Asynchronous write.
+    });
+
+    setTimeout(function () {
+      blink(count - 1);
+    }, 400);
   }(25));
   res.send('okay');
 });
