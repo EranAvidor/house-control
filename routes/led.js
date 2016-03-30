@@ -7,6 +7,10 @@ var Gpio = require('onoff').Gpio,
   // button = new Gpio(4, 'in', 'both');
 
 /* GET home page. */
+router.get('/meital', function(req, res, next) {
+	res.send('shalom');
+});
+
 router.get('/on', function(req, res, next) {
   greenLed.writeSync(1);
   res.send('okay');
@@ -38,6 +42,7 @@ router.get('/blink', function(req, res, next) {
       blink(count - 1);
     }, 200);
   }(50));
+
   (function blink(count) {
     if (count <= 0) {
       return true;
