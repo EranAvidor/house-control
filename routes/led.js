@@ -15,5 +15,10 @@ router.get('/off', function(req, res, next) {
   greenLed.writeSync(0);
   res.send('okay');
 });
-
+router.get('/toggle', function(req, res, next) {
+  var ledStatus = greenLed.readSync();
+  ledStatus = -(ledStatus-1)
+  greenLed.writeSync(ledStatus);
+  res.send('okay');
+});
 module.exports = router;
