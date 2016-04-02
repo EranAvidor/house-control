@@ -1,4 +1,4 @@
-p#green-led-container .bootstrap-switch {
+.bootstrap-switch.border-green {
 	border-color: green;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-green,
@@ -7,7 +7,7 @@ p#green-led-container .bootstrap-switch {
   background: green;
 }
 
-p#red-led-container .bootstrap-switch {
+.bootstrap-switch.border-red {
 	border-color: red;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-red,
@@ -16,7 +16,7 @@ p#red-led-container .bootstrap-switch {
   background: red;
 }
 
-p#blue-led-container .bootstrap-switch {
+.bootstrap-switch.border-blue {
 	border-color: blue;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-blue,
