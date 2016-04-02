@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  include leds.html
+
+block scripts
+  script(type='text/javascript').
+    $(document).ready(function() {
+      $.each([ 'green', 'blue', 'red' ], function( index, color ) {
+        $("#" + color + "-led-switch").on('switchChange.bootstrapSwitch', function(event, state) {
+          console.log(state); // true | false
+        }).bootstrapSwitch({onColor: color});
+      });
+    });

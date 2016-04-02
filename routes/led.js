@@ -7,6 +7,11 @@ var Gpio = require('onoff').Gpio,
   // button = new Gpio(4, 'in', 'both');
 
 /* GET home page. */
+
+router.get('/visual', function(req, res, next) {
+  res.render('leds');
+});
+
 router.get('/meital', function(req, res, next) {
 	greenLed.writeSync(1);
   blueLed.writeSync(1);
