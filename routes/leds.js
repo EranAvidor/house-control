@@ -28,11 +28,17 @@ router.get('/off', function(req, res, next) {
   res.send('okay');
 });
 
-router.get('/toggle', function(req, res, next) {
-  var ledStatus = greenLed.readSync();
-  ledStatus = -(ledStatus-1)
-  greenLed.writeSync(ledStatus);
-  res.send('okay');
+router.get('/:id/toggle', function(req, res, next) {
+  var color = req.params.id;
+  //TODO: create method getLedVariableByColor, should return (err, ledVariable)
+  relevantLed = global[color+'Led'];
+  var ledStatus = 'does not exist'
+  if (!(typeof(relevantLed) == 'undefined'))   {
+    ledStatus = relevantLed.readSync();
+    ledStatus = -(ledStatus-1)
+    relevantLed.writeSync(ledStatus);
+  }
+  res.send(color + 'LED is now: ' + ledStatus);
 });
 
 router.get('/blink', function(req, res, next) {
