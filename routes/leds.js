@@ -30,6 +30,7 @@ router.get('/off', function(req, res, next) {
 
 router.get('/:id/toggle', function(req, res, next) {
   var color = req.params.id;
+  console.log(color + 'Led is toggeling');
   //TODO: create method getLedVariableByColor, should return (err, ledVariable)
   relevantLed = global[color+'Led'];
   var ledStatus = 'does not exist'
