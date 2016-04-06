@@ -8,7 +8,7 @@ var leds = {'green': new Gpio(17, 'out'),
             'red': new Gpio(27, 'out')};
 
 router.get('/', function(req, res, next) {
-  status = {}
+  var status = {};
 
   for(var led_name in leds) {
     status[led_name] = leds[led_name].readSync();
