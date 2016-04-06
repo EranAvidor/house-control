@@ -70,8 +70,8 @@ router.get('/blink', function(req, res, next) {
 
     setTimeout(function () {
       blink(count - 1);
-    }, 200);
-  }(50));
+    }, 500);
+  }(20));
 
   (function blink(count) {
     if (count <= 0) {
