@@ -18,6 +18,14 @@ router.get('/', function(req, res, next) {
   res.send(JSON.stringify(status));
 });
 
+router.get('/:id', function(req, res, next) {
+  var id = req.params.id
+  var status = leds[id].readSync();
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({'name': id, 'status': status}));
+})
+
 router.get('/visual', function(req, res, next) {
   res.render('leds');
 });
