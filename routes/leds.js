@@ -2,9 +2,21 @@ var express = require('express');
 var router = express.Router();
 
 var Gpio = require('onoff').Gpio;
+
 var leds = {'green': new Gpio(17, 'out'), 
             'blue': new Gpio(18, 'out'),
             'red': new Gpio(27, 'out')};
+
+router.get('/', function(req, res, next) {
+  status = {}
+
+  for(var led_name in leds) {
+    status[led_name] = leds[led_name].readSync();
+  }
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(status));
+});
 
 router.get('/visual', function(req, res, next) {
   res.render('leds');
