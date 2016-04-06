@@ -6,14 +6,16 @@ block content
 block scripts
   script(type='text/javascript').
     $(document).ready(function() {
-      $.each([ 'green', 'blue', 'red' ], function( index, color ) {
-        var identifier = "#" + color + "-led-switch"
-        $(identifier).on('switchChange.bootstrapSwitch', function(event, state) {
-          console.log(color + 'Led is now on state: ' + state); // true | false
-          xhttp = new XMLHttpRequest();
-          xhttp.open('GET', '/leds/' + color + '/toggle', true);
-          xhttp.send();
-        }).bootstrapSwitch({onColor: color});
-        $('.bootstrap-switch:has(' + identifier + ')').addClass('border-'+color)
+      $.get('/leds', function(response) {
+        $.each([ 'green', 'blue', 'red' ], function( index, color ) {
+          var identifier = "#" + color + "-led-switch"
+          $(identifier).on('switchChange.bootstrapSwitch', function(event, state) {
+            console.log(color + 'Led is now on state: ' + state); // true | false
+            xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/leds/' + color + '/toggle', true);
+            xhttp.send();
+          }).bootstrapSwitch({onColor: color, state: response[color]});
+          $('.bootstrap-switch:has(' + identifier + ')').addClass('border-'+color)
+        });
       });
     });
