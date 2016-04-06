@@ -24,10 +24,6 @@ router.get('/:id', function(req, res, next) {
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({'name': id, 'status': status}));
-})
-
-router.get('/visual', function(req, res, next) {
-  res.render('leds');
 });
 
 router.get('/meital', function(req, res, next) {
@@ -37,14 +33,20 @@ router.get('/meital', function(req, res, next) {
   res.send('eran');
 });
 
-router.get('/on', function(req, res, next) {
-  leds['green'].writeSync(1);
-  res.send('okay');
+router.post('/:id/on', function(req, res, next) {
+  var id = req.params.id
+  leds[id].writeSync(1);
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({'name': id, 'status': 1}));
 });
 
-router.get('/off', function(req, res, next) {
-  leds['green'].writeSync(0);
-  res.send('okay');
+router.post('/:id/off', function(req, res, next) {
+  var id = req.params.id
+  leds[id].writeSync(0);
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({'name': id, 'status': 0}));
 });
 
 router.get('/:id/toggle', function(req, res, next) {
