@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  include leds.html
+
+block scripts
+  script(type='text/javascript').
+    $(document).ready(function() {
+      $.each([ 'green', 'blue', 'red' ], function( index, color ) {
+        var identifier = "#" + color + "-led-switch"
+        $(identifier).on('switchChange.bootstrapSwitch', function(event, state) {
+          console.log(color + 'Led is now on state: ' + state); // true | false
+          xhttp = new XMLHttpRequest();
+          xhttp.open('GET', '/leds/' + color + '/toggle', true);
+          xhttp.send();
+        }).bootstrapSwitch({onColor: color});
+        $('.bootstrap-switch:has(' + identifier + ')').addClass('border-'+color)
+      });
+    });

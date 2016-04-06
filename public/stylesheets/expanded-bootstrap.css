@@ -1,0 +1,26 @@
+.bootstrap-switch.border-green {
+	border-color: green;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-green,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-green {
+  color: #fff;
+  background: green;
+}
+
+.bootstrap-switch.border-red {
+	border-color: red;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-red,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-red {
+  color: #fff;
+  background: red;
+}
+
+.bootstrap-switch.border-blue {
+	border-color: blue;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-blue,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-blue {
+  color: #fff;
+  background: blue;
+}
