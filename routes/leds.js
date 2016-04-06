@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-var Gpio = require('onoff').Gpio,
-  greenLed = new Gpio(17, 'out'),
-  blueLed = new Gpio(18, 'out');
-  redLed = new Gpio(27, 'out');
+var Gpio = require('onoff').Gpio;
+var greenLed = new Gpio(17, 'out');
+var blueLed = new Gpio(18, 'out');
+var redLed = new Gpio(27, 'out');
+
   // button = new Gpio(4, 'in', 'both');
 
 /* GET home page. */
@@ -35,6 +36,7 @@ router.get('/:id/toggle', function(req, res, next) {
   console.log(color + 'Led is toggeling');
   //TODO: create method getLedVariableByColor, should return (err, ledVariable)
   led = global[color+'Led'];
+
   var ledStatus = 'does not exist'
   if (!(typeof(led) == 'undefined'))   {
     ledStatus = led.readSync();
