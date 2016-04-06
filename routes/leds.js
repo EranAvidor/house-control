@@ -4,6 +4,7 @@ var router = express.Router();
 var Gpio = require('onoff').Gpio,
   greenLed = new Gpio(17, 'out'),
   blueLed = new Gpio(18, 'out');
+  redLed = new Gpio(27, 'out');
   // button = new Gpio(4, 'in', 'both');
 
 /* GET home page. */
@@ -13,8 +14,9 @@ router.get('/visual', function(req, res, next) {
 });
 
 router.get('/meital', function(req, res, next) {
-	greenLed.writeSync(1);
+  greenLed.writeSync(1);
   blueLed.writeSync(1);
+  redLed.writeSync(1);
   res.send('eran');
 });
 
@@ -32,12 +34,12 @@ router.get('/:id/toggle', function(req, res, next) {
   var color = req.params.id;
   console.log(color + 'Led is toggeling');
   //TODO: create method getLedVariableByColor, should return (err, ledVariable)
-  relevantLed = global[color+'Led'];
+  led = global[color+'Led'];
   var ledStatus = 'does not exist'
-  if (!(typeof(relevantLed) == 'undefined'))   {
-    ledStatus = relevantLed.readSync();
+  if (!(typeof(led) == 'undefined'))   {
+    ledStatus = led.readSync();
     ledStatus = -(ledStatus-1)
-    relevantLed.writeSync(ledStatus);
+    led.writeSync(ledStatus);
   }
   res.send(color + 'LED is now: ' + ledStatus);
 });
@@ -50,6 +52,20 @@ router.get('/blink', function(req, res, next) {
 
     greenLed.read(function (err, value) { // Asynchronous read.
       greenLed.write(value ^ 1);// Asynchronous write.
+    });
+
+    setTimeout(function () {
+      blink(count - 1);
+    }, 200);
+  }(50));
+
+  (function blink(count) {
+    if (count <= 0) {
+      return true;
+    }
+
+    redLed.read(function (err, value) { // Asynchronous read.
+      redLed.write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
