@@ -2,32 +2,28 @@ var express = require('express');
 var router = express.Router();
 
 var Gpio = require('onoff').Gpio;
-var greenLed = new Gpio(17, 'out');
-var blueLed = new Gpio(18, 'out');
-var redLed = new Gpio(27, 'out');
-
-  // button = new Gpio(4, 'in', 'both');
-
-/* GET home page. */
+var leds = {'green': new Gpio(17, 'out'), 
+            'blue': new Gpio(18, 'out'),
+            'red': new Gpio(27, 'out')};
 
 router.get('/visual', function(req, res, next) {
   res.render('leds');
 });
 
 router.get('/meital', function(req, res, next) {
-  greenLed.writeSync(1);
-  blueLed.writeSync(1);
-  redLed.writeSync(1);
+  leds['green'].writeSync(1);
+  leds['blue'].writeSync(1);
+  leds['red'].writeSync(1);
   res.send('eran');
 });
 
 router.get('/on', function(req, res, next) {
-  greenLed.writeSync(1);
+  leds['green'].writeSync(1);
   res.send('okay');
 });
 
 router.get('/off', function(req, res, next) {
-  greenLed.writeSync(0);
+  leds['green'].writeSync(0);
   res.send('okay');
 });
 
@@ -35,7 +31,7 @@ router.get('/:id/toggle', function(req, res, next) {
   var color = req.params.id;
   console.log(color + 'Led is toggeling');
   //TODO: create method getLedVariableByColor, should return (err, ledVariable)
-  led = global[color+'Led'];
+  led = leds[color];
 
   var ledStatus = 'does not exist'
   if (!(typeof(led) == 'undefined'))   {
@@ -52,8 +48,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    greenLed.read(function (err, value) { // Asynchronous read.
-      greenLed.write(value ^ 1);// Asynchronous write.
+    leds['green'].read(function (err, value) { // Asynchronous read.
+      leds['green'].write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
@@ -66,8 +62,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    redLed.read(function (err, value) { // Asynchronous read.
-      redLed.write(value ^ 1);// Asynchronous write.
+    leds['red'].read(function (err, value) { // Asynchronous read.
+      leds['red'].write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
@@ -80,8 +76,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    blueLed.read(function (err, value) { // Asynchronous read.
-      blueLed.write(value ^ 1);// Asynchronous write.
+    leds['blue'].read(function (err, value) { // Asynchronous read.
+      leds['blue'].write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
