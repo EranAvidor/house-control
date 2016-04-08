@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Gpio = require('onoff').Gpio;
+var Led = require('../app/led');
 
-var leds = {'green': new Gpio(17, 'out'), 
-            'blue': new Gpio(18, 'out'),
-            'red': new Gpio(27, 'out')};
+var greenLed = new Led(17);
+var blueLed = new Led(18);
+var redLed = new Led(27);
+var leds = {'green': greenLed, 'blue': blueLed, 'red': redLed}
 
 router.get('/', function(req, res, next) {
   var status = {};
@@ -35,7 +36,7 @@ router.get('/meital', function(req, res, next) {
 
 router.post('/:id/on', function(req, res, next) {
   var id = req.params.id
-  leds[id].writeSync(1);
+  leds[id].on();
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({'name': id, 'status': 1}));
@@ -43,7 +44,7 @@ router.post('/:id/on', function(req, res, next) {
 
 router.post('/:id/off', function(req, res, next) {
   var id = req.params.id
-  leds[id].writeSync(0);
+  leds[id].off();
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({'name': id, 'status': 0}));
@@ -57,9 +58,7 @@ router.get('/:id/toggle', function(req, res, next) {
 
   var ledStatus = 'does not exist'
   if (!(typeof(led) == 'undefined'))   {
-    ledStatus = led.readSync();
-    ledStatus = -(ledStatus-1)
-    led.writeSync(ledStatus);
+    ledStatus = led.toggle();
   }
   res.send(color + 'LED is now: ' + ledStatus);
 });
