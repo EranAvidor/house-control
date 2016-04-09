@@ -3,9 +3,9 @@ var router = express.Router();
 
 var Led = require('../app/led');
 
-var greenLed = new Led(17);
-var blueLed = new Led(18);
-var redLed = new Led(27);
+var greenLed = new Led(17, 'green');
+var blueLed = new Led(18, 'blue');
+var redLed = new Led(27, 'red');
 var leds = {'green': greenLed, 'blue': blueLed, 'red': redLed}
 
 router.get('/', function(req, res, next) {
@@ -52,9 +52,7 @@ router.post('/:id/off', function(req, res, next) {
 
 router.get('/:id/toggle', function(req, res, next) {
   var color = req.params.id;
-  console.log(color + 'Led is toggeling');
-  //TODO: create method getLedVariableByColor, should return (err, ledVariable)
-  led = leds[color];
+  var led = leds[color];
 
   var ledStatus = 'does not exist'
   if (!(typeof(led) == 'undefined'))   {
@@ -69,8 +67,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    leds['green'].read(function (err, value) { // Asynchronous read.
-      leds['green'].write(value ^ 1);// Asynchronous write.
+    leds['green'].gpio.read(function (err, value) { // Asynchronous read.
+      leds['green'].gpio.write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
@@ -83,8 +81,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    leds['red'].read(function (err, value) { // Asynchronous read.
-      leds['red'].write(value ^ 1);// Asynchronous write.
+    leds['red'].gpio.read(function (err, value) { // Asynchronous read.
+      leds['red'].gpio.write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {
@@ -97,8 +95,8 @@ router.get('/blink', function(req, res, next) {
       return true;
     }
 
-    leds['blue'].read(function (err, value) { // Asynchronous read.
-      leds['blue'].write(value ^ 1);// Asynchronous write.
+    leds['blue'].gpio.read(function (err, value) { // Asynchronous read.
+      leds['blue'].gpio.write(value ^ 1);// Asynchronous write.
     });
 
     setTimeout(function () {

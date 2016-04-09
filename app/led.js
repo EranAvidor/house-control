@@ -1,33 +1,40 @@
+"use strict";
+
 var Gpio = require('onoff').Gpio;
 
-function Led(pin_id) {
-  return {
-    gpio: function() { return new Gpio(pin_id, 'out') },
-    
-    status: function() {
-      this.gpio().readSync();
-    },
-    on: function() {
-      this.gpio().writeSync(1);
-    },
+function Led(pinId, ledColor) {
+  this.gpio = new Gpio(pinId, 'out');
+  // TODO: add validation, successful creation
+  this.pin = pinId;
+  this.color = ledColor;
+};
 
-    off: function() {
-      this.gpio().writeSync(0);
-    },
+Led.prototype.readSync = function() {
+  return this.gpio.readSync();
+};
 
-    blink: function() {
-      console.log("O.O");
-      console.log("-.-");
-    },
+Led.prototype.writeSync = function(status) {
+  // TODO: add value validation
+  this.gpio.writeSync(status);
+};
 
-    toggle: function() {
-      console.log("**** Everyday I'm toggling! ****");
-      ledStatus = this.status();
-      ledStatus = -(ledStatus-1)
-      led.gpio().writeSync(ledStatus);
-      return ledStatus;
-    }
-  };
+Led.prototype.on = function() {
+  this.writeSync(1);
+};
+
+Led.prototype.off = function() {
+  this.writeSync(0);
+};
+
+Led.prototype.toggle = function() {
+  var ledStatus = this.readSync();
+  ledStatus = -(ledStatus-1)
+  this.writeSync(ledStatus);
+};
+
+Led.prototype.blink = function(waitTime, times) {
+  console.log("O.O");
+  console.log("-.-");
 };
 
 module.exports = Led;
