@@ -51,14 +51,15 @@ router.post('/:id/off', function(req, res, next) {
 });
 
 router.get('/:id/toggle', function(req, res, next) {
-  var color = req.params.id;
-  var led = leds[color];
+  var id = req.params.id;
+  var led = leds[id];
 
-  var ledStatus = 'does not exist'
+  var ledStatus = 'unknown led';
   if (!(typeof(led) == 'undefined'))   {
     ledStatus = led.toggle();
   }
-  res.send(color + 'LED is now: ' + ledStatus);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({'name': id, 'status': ledStatus}));
 });
 
 router.get('/blink', function(req, res, next) {

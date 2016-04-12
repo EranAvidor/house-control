@@ -28,8 +28,9 @@ Led.prototype.off = function() {
 
 Led.prototype.toggle = function() {
   var ledStatus = this.readSync();
-  ledStatus = -(ledStatus-1)
+  ledStatus = -(ledStatus-1);
   this.writeSync(ledStatus);
+  return ledStatus;
 };
 
 Led.prototype.blink = function(waitTime, times) {
